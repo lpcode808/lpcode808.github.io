@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>builds</title>
+  <meta name="description" content="A portfolio of tools, explorable explanations, and prototypes built at the intersection of education, AI, and craft.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0e0e11;
+      --bg-card: #17171c;
+      --bg-card-hover: #1e1e25;
+      --border: #2a2a35;
+      --border-hover: #3d3d4d;
+      --text: #e4e4e8;
+      --text-dim: #8b8b9e;
+      --text-muted: #5c5c70;
+      --accent: #a78bfa;
+      --accent-dim: #7c5cbf;
+      --accent2: #34d399;
+      --accent2-dim: #059669;
+      --tag-bg: #1e1e2a;
+      --tag-text: #9d9db5;
+      --tag-active-bg: #a78bfa;
+      --tag-active-text: #0e0e11;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+
+    /* Mauka (mountain green + earth) */
+    [data-theme="mauka"] {
+      --bg: #f5f0e8;
+      --bg-card: #fffdf7;
+      --bg-card-hover: #f0ead8;
+      --border: #d4c9a8;
+      --border-hover: #b8a880;
+      --text: #2c2416;
+      --text-dim: #5e5039;
+      --text-muted: #8a7a5a;
+      --accent: #2d6a4f;
+      --accent-dim: #1b4332;
+      --accent2: #d4a017;
+      --accent2-dim: #b8860b;
+      --tag-bg: #e8e0cc;
+      --tag-text: #5e5039;
+      --tag-active-bg: #2d6a4f;
+      --tag-active-text: #f5f0e8;
+    }
+
+    /* Makai (ocean blue + coral) */
+    [data-theme="makai"] {
+      --bg: #f0f7fa;
+      --bg-card: #ffffff;
+      --bg-card-hover: #e4f1f7;
+      --border: #b8d8e8;
+      --border-hover: #8cbfd6;
+      --text: #1a2e3a;
+      --text-dim: #3d6478;
+      --text-muted: #6a9ab5;
+      --accent: #0077b6;
+      --accent-dim: #005f8a;
+      --accent2: #e85d4a;
+      --accent2-dim: #c44536;
+      --tag-bg: #dceef5;
+      --tag-text: #3d6478;
+      --tag-active-bg: #0077b6;
+      --tag-active-text: #f0f7fa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 1rem;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    header h1 span { color: var(--accent); }
+    header h1 .accent2 { color: var(--accent2); }
+    header p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      max-width: 540px;
+      line-height: 1.65;
+    }
+    header .links {
+      margin-top: 0.75rem;
+      display: flex;
+      gap: 1rem;
+    }
+    header .links a {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    header .links a:hover { color: var(--accent); }
+
+    /* ---- THEME SWITCHER ---- */
+    .theme-switcher {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem 0;
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .theme-switcher span {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-right: 0.25rem;
+    }
+    .theme-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+      padding: 0;
+    }
+    .theme-btn:hover { transform: scale(1.15); }
+    .theme-btn.active { border-color: var(--text); border-width: 3px; }
+    .theme-btn[data-theme="default"] { background: linear-gradient(135deg, #a78bfa, #34d399); }
+    .theme-btn[data-theme="mauka"] { background: linear-gradient(135deg, #2d6a4f, #d4a017); }
+    .theme-btn[data-theme="makai"] { background: linear-gradient(135deg, #0077b6, #e85d4a); }
+
+    /* ---- APPROACH SECTION ---- */
+    .approach {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .approach details {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      padding: 1rem 1.25rem;
+      margin-top: 1rem;
+    }
+    .approach summary {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      color: var(--accent2);
+      cursor: pointer;
+      list-style: none;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .approach summary::-webkit-details-marker { display: none; }
+    .approach summary::before { content: '+ '; }
+    .approach details[open] summary::before { content: '\2212  '; }
+    .approach summary:hover { color: var(--text); }
+    .approach .approach-body {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .approach .approach-body p {
+      margin-bottom: 0.6rem;
+    }
+    .approach .approach-body ul {
+      padding-left: 1.1rem;
+      margin-bottom: 0.6rem;
+    }
+    .approach .approach-body li {
+      margin-bottom: 0.25rem;
+    }
+    .approach .approach-body strong {
+      color: var(--text);
+    }
+
+    /* ---- FILTER BAR ---- */
+    .filters {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .filters button {
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filters button:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+    .filters button.active {
+      background: var(--tag-active-bg);
+      color: var(--tag-active-text);
+      border-color: var(--tag-active-bg);
+    }
+    .filters .expand-toggle {
+      margin-left: auto;
+      background: transparent;
+      border-color: var(--accent2-dim);
+      color: var(--accent2);
+      font-family: var(--mono);
+      font-size: 0.75rem;
+    }
+    .filters .expand-toggle:hover {
+      border-color: var(--accent2);
+      color: var(--text);
+    }
+
+    /* ---- GRID ---- */
+    .grid {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ---- CARD ---- */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .card h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      color: var(--accent2);
+    }
+    .card .arrow {
+      color: var(--text-muted);
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: color 0.2s, transform 0.2s;
+    }
+    .card:hover .arrow {
+      color: var(--accent);
+      transform: translate(2px, -2px);
+    }
+    .card .vibe {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+      font-style: italic;
+    }
+    /* ---- DETAILS (expandable) ---- */
+    .card details {
+      margin-top: 0.25rem;
+    }
+    .card summary {
+      font-size: 0.75rem;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      cursor: pointer;
+      list-style: none;
+      transition: color 0.2s;
+    }
+    .card summary::-webkit-details-marker { display: none; }
+    .card summary::before { content: '+ '; }
+    .card details[open] summary::before { content: '− '; }
+    .card summary:hover { color: var(--accent2); }
+    .card .points {
+      margin-top: 0.5rem;
+      padding-left: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+    .card .points li {
+      margin-bottom: 0.3rem;
+    }
+    .card .explain-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .card .explain-link:hover {
+      color: var(--accent-dim);
+    }
+    .card .explain-link::before {
+      content: '\2192  ';
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1rem 1.25rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--accent); }
+
+    /* ---- HIDDEN CARD (filter) ---- */
+    .card.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1><span>builds</span></h1>
+  <p>Tools, explorable explanations, and prototypes at the intersection of education, AI, and craft. Everything here is live — tap any card to try it.</p>
+  <div class="links">
+    <a href="https://github.com/lpcode808">github</a>
+  </div>
+</header>
+
+<div class="theme-switcher">
+  <span>theme</span>
+  <button class="theme-btn active" data-theme="default" title="Default dark" aria-label="Default dark theme"></button>
+  <button class="theme-btn" data-theme="mauka" title="Mauka — mountain greens" aria-label="Mauka theme"></button>
+  <button class="theme-btn" data-theme="makai" title="Makai — ocean blues" aria-label="Makai theme"></button>
+</div>
+
+<section class="approach">
+  <details>
+    <summary>how it's built</summary>
+    <div class="approach-body">
+      <p>These projects are built with <strong>AI agents as collaborators</strong> — not by pasting prompts into a chatbot, but by working with Claude Code, Cursor, Codex, and Windsurf as persistent coding partners that read project docs, write tests, and hand off context to each other.</p>
+      <p>The approach follows a few consistent patterns:</p>
+      <ul>
+        <li><strong>Vanilla-first, no build step.</strong> Most projects are pure HTML/CSS/JS served directly from GitHub Pages. No webpack, no bundler — edit, test, push. Frameworks (React, Next.js) only when the problem demands it.</li>
+        <li><strong>Agent-native project structure.</strong> Every project has a <code>CLAUDE.md</code> or <code>AGENTS.md</code> that gives any AI agent full context: architecture, file map, testing commands, deploy instructions, and constraints. A <code>log.md</code> tracks every session.</li>
+        <li><strong>Multi-agent handoff.</strong> Codex handles refactors, Claude Code handles exploration and UX, Cursor and Windsurf handle design and iteration. They share context through structured docs, not memory — any agent can pick up where another left off.</li>
+        <li><strong>Ship fast, then harden.</strong> Many projects start as single-session builds, then grow Playwright E2E tests, accessibility audits (axe-core WCAG AA), and keyboard navigation over subsequent sessions.</li>
+        <li><strong>Local-first and private.</strong> localStorage over backends, export over accounts. Nothing phones home. The tools work offline and the data stays on your device.</li>
+        <li><strong>Educational by design.</strong> Code is written to be readable and learnable. Teacher prompts, student challenges, progressive enhancement, and vocabulary hints are baked into the pedagogy projects — the code itself is a teaching artifact.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<nav class="filters" aria-label="Filter projects">
+  <button class="active" data-filter="all">All</button>
+  <button data-filter="edtech">EdTech</button>
+  <button data-filter="tools">Tools</button>
+  <button data-filter="viz">Viz & Interactive</button>
+  <button data-filter="ux">UX & Product</button>
+  <button class="expand-toggle" id="expandToggle">expand all</button>
+</nav>
+
+<main class="grid" id="grid">
+
+  <!-- ==================== EDTECH ==================== -->
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/ConicSections/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Conic Sections</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">Explorable math that lets students drag before they derive — light, shape, and reflection made tangible.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code using multi-agent handoff (Codex + Claude Code)</li>
+        <li>6-module curriculum with shared math/draw/interaction ES modules across pages</li>
+        <li>Playwright E2E tests, persistent telemetry, ?debug=1 mode, and a lessons-learned doc</li>
+        <li>Each page has a teacher prompt, student challenge, and key vocabulary — designed for projection and phone</li>
+        <li>Vanilla JS + HTML Canvas, no build step, GitHub Actions CI for deploy + UX tests</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/Claude-Code-101/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Claude Code 101</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">The guide I wish existed when I started — plain-English briefing doc that makes agentic AI approachable for non-developers.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>35-section guide: terminal basics → security → first project → deploy to GitHub Pages</li>
+        <li>Written for educators and "vibe coders" — people with ideas, no CS degree</li>
+        <li>Static HTML with self-hosted JetBrains Mono webfonts — zero external CDN dependencies</li>
+        <li>Explains the mental model shift from chat-based to agentic AI</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/ExploreVibeCodeCamp/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Vibe Code Camp</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">Distilled wisdom from 20 speakers on building with AI — a conference turned browsable knowledge base.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code — conference knowledge extraction into a browsable, searchable format</li>
+        <li>20 speaker profiles with 6 browsable views (grid, kanban, stacks, float, portraits, list)</li>
+        <li>Core concepts: agent-native software, compound engineering, malleable software, MCP</li>
+        <li>Includes infographics, slideshow, and DeepWiki link</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/Hawaii-Code-AI-Thon-Help/gemini-guide.html" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Hawaii Code AI-Thon</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A step-by-step launchpad for first-time builders — go from zero to deployed app in one workshop.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code — single-file HTML, no build step, two deliverables</li>
+        <li>Main guide: TOC sidebar, Cmd+K search, copy blocks, tabbed Canvas vs AI Studio paths</li>
+        <li>Journey map: pannable/zoomable 3000×2100px canvas with 13 clickable card nodes and animated SVG flow lines</li>
+        <li>Workshop for Hawaii K-12 educators — participants use personal Google accounts with Gemini</li>
+        <li>Keyboard shortcuts (T, Cmd+K, Cmd+/, Esc), reading progress bar, vocab hints with tooltips</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/Hawaii-EdTech-AI-Resources/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Hawaii EdTech AI Resources</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A curated resource hub connecting Hawaii's educators to the AI tools that actually matter.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code — React + Vite + Tailwind + Fuse.js for fuzzy search</li>
+        <li>Feed-based discovery with category/tag filtering, sort by recent/random/alpha, bookmarks via localStorage</li>
+        <li>Resource detail modals, responsive design, memoized search/filter operations</li>
+        <li>Built for the local Hawaii AI/EdTech community — MVP with mock data, designed for real-world resource sharing</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/SteamEngine25/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>STEAM Engine 25</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">An interactive map of the learning ecosystem — pick a path, link the big ideas, and build something real.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>TypeScript app deployed to GitHub Pages</li>
+        <li>Three entry paths: Quick Start (5 links), Start Here (10-min overview), and Deep Dive</li>
+        <li>Core navigation: Learning Journey, Atlas of Ideas, Projects &amp; Efforts</li>
+        <li>Designed for self-directed exploration with guided options</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/nano-banana-explorer/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Nano Banana Architect</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A dark-themed deep-dive companion to a Substack article — reading meets interactive exploration.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Companion app for a Substack article — bridges reading into interactive exploration</li>
+        <li>Custom color palette: navy (#1e1b4b), banana (#ffe135), orange (#ff6719)</li>
+        <li>Built with Vite + Tailwind, custom scrollbar styling</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/TechFamilyFunFair/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Tech Family Fun Fair</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A polished event page that brings families and tech together in one cheerful, mobile-friendly package.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>React SPA built with Vite for a community tech event</li>
+        <li>Montserrat + Open Sans typography, SPA routing hack for GitHub Pages</li>
+      </ul>
+    </details>
+  </a>
+
+  <!-- ==================== TOOLS ==================== -->
+
+  <a class="card" data-cat="tools" href="https://lpcode808.github.io/JobSeeker/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>JobSeeker</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A CLI-inspired dossier for your job search — file trees, interview prompts, and conversational intake in one browser tab.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>CLI-inspired artifact builder — file tree with editable markdown files and conversational intake</li>
+        <li>Vanilla JS, no build step — all data in localStorage under jobseeker.artifact.v1</li>
+        <li>Export to JSON, markdown bundle, or ZIP (uses jszip)</li>
+        <li>Onboarding overlay and sample data to show the pattern immediately</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="tools" href="https://lpcode808.github.io/ScripCalculator/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Scrip Calculator</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">The app you pull out at the school carnival so you know exactly how much scrip to buy.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code — pure HTML/CSS/JS, data-driven via menu.json, no build tools</li>
+        <li>2026 theme: "Welcome to the Jungle" — jungle greens, carnival yellow, creme background</li>
+        <li>Hash map indexing for O(1) lookups, event delegation, WCAG 2.1 AA accessible</li>
+        <li>Updated annually every January — scrip value changed from 50¢ to $1 in 2026</li>
+        <li>"Most users are parents scrambling at carnival" — 90% mobile traffic, iOS Safari primary</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="tools" href="https://lpcode808.github.io/Mortgage/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Hawaii Mortgage Calculator</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">Hawaii-specific mortgage math — because housing here hits different and you need to see the real numbers.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Vanilla JavaScript, no build tools, no frameworks</li>
+        <li>Monthly payment breakdown with additional expenses, save and compare multiple properties</li>
+        <li>Built for the Hawaii housing market</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="tools" href="https://lpcode808.github.io/ShopTracker/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>ShopTracker</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A no-fuss shopping list that just works — track items, check them off, move on.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Vanilla JS — basic shopping list with tax calculation and item management</li>
+        <li>Browser-based, no account needed, built in a single session</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="tools" href="https://lpcode808.github.io/BYOA-plywood/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Plywood Cutter</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A woodworker's best friend — visualize your cuts before you waste a $70 sheet of plywood.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>HTML5 Canvas visualization of optimal cut layout on a plywood sheet</li>
+        <li>Calculates remaining scrap and waste — saves real money on $70 sheets</li>
+        <li>"BYOA" (Build Your Own App) project — vanilla JS, no dependencies</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="tools" href="https://lpcode808.github.io/BYOA-pomotimer/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Pomo Timer</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A fun Pomodoro timer that keeps you honest — 25 minutes of focus, then you've earned a break.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Classic 25-minute Pomodoro with integrated todo list</li>
+        <li>"BYOA" (Build Your Own App) project — simple, focused, no dependencies</li>
+      </ul>
+    </details>
+  </a>
+
+  <!-- ==================== VIZ & INTERACTIVE ==================== -->
+
+  <a class="card" data-cat="viz" href="https://lpcode808.github.io/Comparison/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>AI Tool Comparison</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">The reference table for the agentic era — filter, sort, and actually understand which AI tool does what.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code — vanilla JS, Fuse.js (only external dep), no build step</li>
+        <li>74 Playwright E2E tests, axe-core accessibility audit: 0 critical/serious/moderate violations</li>
+        <li>Based on Ethan Mollick's Feb 2026 guide — Models → Apps → Harnesses framework</li>
+        <li>3 separate color systems all meeting WCAG 4.5:1 contrast, light/dark theme toggle</li>
+        <li>Mobile: focus-one-service mode with next/prev; Desktop: full comparison table</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="viz" href="https://lpcode808.github.io/GoogleAIMode/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>G.AI Quick Launch</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">One text box, one tap, straight into Google's AI search — built for speed on mobile.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Single-page vanilla JS app — one input, one button, opens Google AI Mode</li>
+        <li>Settings to change base URL if Google updates the endpoint</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="viz" href="https://lpcode808.github.io/DialUp/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>DialUp</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A retro-spirited contact book that lives in your browser — local, private, satisfying.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Contacts encoded in URL via ?c=Name:Number for sharing — tap big buttons to call via tel: links</li>
+        <li>Single HTML file, zero dependencies, localStorage persistence, dark mode</li>
+      </ul>
+    </details>
+  </a>
+
+  <!-- ==================== UX & PRODUCT ==================== -->
+
+  <a class="card" data-cat="ux" href="https://lpcode808.github.io/ThreadSwitcherMockup/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Thread Quick Open</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">What if switching AI threads felt as fast as ⌘K? — a UX proposal for Codex's thread navigation.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Vanilla JS, no build step — command palette triggered by ⌘O / Ctrl+O</li>
+        <li>Search ranks title matches above body matches, shows highlighted snippet previews</li>
+        <li>⌘J/⌘K keyboard nav for both results (palette open) and threads (palette closed)</li>
+        <li>Functional prototype with realistic sample conversation transcripts</li>
+      </ul>
+    </details>
+  </a>
+
+  <a class="card" data-cat="ux" href="https://lpcode808.github.io/Wrapped-Claude-Code/" target="_blank" rel="noopener">
+    <div class="card-top">
+      <h2>Claude Code Wrapped</h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">Spotify Wrapped but for your Claude Code year — key moments, meta achievements, and the vibes of building with AI.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Python scripts analyze ~/.claude/projects/ JSONL files — counts only your messages (type=="user")</li>
+        <li>Generates 3 outputs: detailed analysis, Spotify-style parody, and shareable summary</li>
+        <li>Also has a "one-prompt method" — paste a single prompt into Claude Code and it builds the analysis from scratch</li>
+        <li>Read-only, local-only, no tracking — community project tagged #ClaudeCodeWrapped</li>
+      </ul>
+    </details>
+  </a>
+
+</main>
+
+<footer>
+  <span>19 projects · all live on GitHub Pages</span>
+  <a href="https://github.com/lpcode808">lpcode808</a>
+</footer>
+
+<script>
+  // Filter buttons (only ones with data-filter)
+  const filterBtns = document.querySelectorAll('.filters button[data-filter]');
+  const cards = document.querySelectorAll('.card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.cat === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Prevent card navigation when clicking details
+  document.querySelectorAll('.card details').forEach(d => {
+    d.addEventListener('click', e => e.preventDefault());
+  });
+  document.querySelectorAll('.card summary').forEach(s => {
+    s.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const details = s.parentElement;
+      details.open = !details.open;
+    });
+  });
+
+  // Expand/collapse all talking points
+  const expandBtn = document.getElementById('expandToggle');
+  let allOpen = false;
+  expandBtn.addEventListener('click', () => {
+    allOpen = !allOpen;
+    document.querySelectorAll('.card details').forEach(d => d.open = allOpen);
+    expandBtn.textContent = allOpen ? 'collapse all' : 'expand all';
+  });
+
+  // Inject "explain terms" links into each card
+  document.querySelectorAll('.card details').forEach(det => {
+    const points = det.querySelector('.points');
+    if (!points) return;
+    const terms = Array.from(points.querySelectorAll('li')).map(li => li.textContent).join('; ');
+    const card = det.closest('.card');
+    const title = card.querySelector('h2')?.textContent || '';
+    const query = `Explain the technical terms in this project description for "${title}": ${terms}. Demystify it using ADEPT learning method from betterexplained (analogy, diagram, example, plain-english, technical).`;
+    const link = document.createElement('a');
+    link.className = 'explain-link';
+    link.textContent = 'explain these terms';
+    link.href = 'https://g.ai?q=' + encodeURIComponent(query);
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.addEventListener('click', e => e.stopPropagation());
+    det.appendChild(link);
+  });
+
+  // Theme switcher
+  const themeBtns = document.querySelectorAll('.theme-btn');
+  const saved = localStorage.getItem('portfolio-theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === saved));
+  }
+  themeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.theme;
+      if (theme === 'default') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+      localStorage.setItem('portfolio-theme', theme);
+      themeBtns.forEach(b => b.classList.toggle('active', b === btn));
+    });
+  });
+</script>
+
+</body>
+</html>
