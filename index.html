@@ -194,6 +194,29 @@
     .approach .approach-body strong {
       color: var(--text);
     }
+    .approach .resource-toggle {
+      margin-top: 0.85rem;
+      padding: 0.85rem 1rem;
+      background: transparent;
+      border-color: var(--border-hover);
+    }
+    .approach .resource-toggle summary {
+      color: var(--accent);
+    }
+    .approach .resource-list {
+      padding-left: 1.1rem;
+      margin: 0.4rem 0 0;
+    }
+    .approach .resource-list a {
+      color: var(--accent2);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .approach .resource-list a:hover {
+      color: var(--text);
+      border-color: var(--accent2);
+    }
 
     /* ---- FILTER BAR ---- */
     .filters {
@@ -402,6 +425,18 @@
         <li><strong>Local-first and private.</strong> localStorage over backends, export over accounts. Nothing phones home. The tools work offline and the data stays on your device.</li>
         <li><strong>Educational by design.</strong> Code is written to be readable and learnable. Teacher prompts, student challenges, progressive enhancement, and vocabulary hints are baked into the pedagogy projects — the code itself is a teaching artifact.</li>
       </ul>
+      <details class="resource-toggle">
+        <summary>influences + notes</summary>
+        <p>Some of the thinking behind this workflow lives in these posts and videos.</p>
+        <ul class="resource-list">
+          <li><a href="https://www.bentossell.com/blog/post.html?slug=how-i-code" target="_blank" rel="noopener">Ben Tossell: How I Code</a></li>
+          <li><a href="https://youtu.be/oshQg1uSRvg?si=8hHCQLCKq8wZUHpr" target="_blank" rel="noopener">AI coding workflow video</a></li>
+          <li><a href="https://youtu.be/k0gmTOm1eus?si=F5dHqtZqwW4FLCCF" target="_blank" rel="noopener">AI app-building video</a></li>
+          <li><a href="https://acaiberry.substack.com/p/your-fresh-eyes-are-the-feature" target="_blank" rel="noopener">Your Fresh Eyes Are the Feature</a></li>
+          <li><a href="https://acaiberry.substack.com/p/you-dont-need-to-catch-up" target="_blank" rel="noopener">You Don't Need to Catch Up</a></li>
+          <li><a href="https://acaiberry.substack.com/p/building-apps-with-ai-a-journey-in" target="_blank" rel="noopener">Building Apps with AI: A Journey In</a></li>
+        </ul>
+      </details>
     </div>
   </details>
 </section>
