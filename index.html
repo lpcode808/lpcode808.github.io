@@ -415,26 +415,26 @@
   <details>
     <summary>how it's built</summary>
     <div class="approach-body">
-      <p>These projects are built with <strong>AI agents as collaborators</strong> — not by pasting prompts into a chatbot, but by working with Claude Code, Cursor, Codex, and Windsurf as persistent coding partners that read project docs, write tests, and hand off context to each other.</p>
+      <p>These projects are built with <strong>AI agents as collaborators</strong> — not by pasting prompts into a chatbot, but by working with <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>, <a href="https://openai.com/codex" target="_blank" rel="noopener">Codex</a>, <a href="https://cursor.com" target="_blank" rel="noopener">Cursor</a>, <a href="https://windsurf.com" target="_blank" rel="noopener">Windsurf</a>, and <a href="https://factory.ai" target="_blank" rel="noopener">Droid (by Factory)</a> as persistent coding partners (aka agent harnesses) that read project docs, write tests, and hand off context to each other. The underlying model depends on the day and time (and amount of tokens remaining).</p>
       <p>The approach follows a few consistent patterns:</p>
       <ul>
         <li><strong>Vanilla-first, no build step.</strong> Most projects are pure HTML/CSS/JS served directly from GitHub Pages. No webpack, no bundler — edit, test, push. Frameworks (React, Next.js) only when the problem demands it.</li>
         <li><strong>Agent-native project structure.</strong> Every project has a <code>CLAUDE.md</code> or <code>AGENTS.md</code> that gives any AI agent full context: architecture, file map, testing commands, deploy instructions, and constraints. A <code>log.md</code> tracks every session.</li>
-        <li><strong>Multi-agent handoff.</strong> Codex handles refactors, Claude Code handles exploration and UX, Cursor and Windsurf handle design and iteration. They share context through structured docs, not memory — any agent can pick up where another left off.</li>
+        <li><strong>Multi-agent handoff.</strong> Codex handles refactors, Claude Code handles exploration and UX, Cursor and Windsurf handle design and iteration. They share context through structured docs, not memory — any agent can pick up where another left off. (Really, any of them can handle anything)</li>
         <li><strong>Ship fast, then harden.</strong> Many projects start as single-session builds, then grow Playwright E2E tests, accessibility audits (axe-core WCAG AA), and keyboard navigation over subsequent sessions.</li>
         <li><strong>Local-first and private.</strong> localStorage over backends, export over accounts. Nothing phones home. The tools work offline and the data stays on your device.</li>
         <li><strong>Educational by design.</strong> Code is written to be readable and learnable. Teacher prompts, student challenges, progressive enhancement, and vocabulary hints are baked into the pedagogy projects — the code itself is a teaching artifact.</li>
       </ul>
       <details class="resource-toggle">
         <summary>influences + notes</summary>
-        <p>Some of the thinking behind this workflow lives in these posts and videos.</p>
+        <p>There's lots of good content to read, watch, listen to. Here's a few:</p>
         <ul class="resource-list">
-          <li><a href="https://www.bentossell.com/blog/post.html?slug=how-i-code" target="_blank" rel="noopener">Ben Tossell: How I Code</a></li>
-          <li><a href="https://youtu.be/oshQg1uSRvg?si=8hHCQLCKq8wZUHpr" target="_blank" rel="noopener">AI coding workflow video</a></li>
-          <li><a href="https://youtu.be/k0gmTOm1eus?si=F5dHqtZqwW4FLCCF" target="_blank" rel="noopener">AI app-building video</a></li>
+          <li><a href="https://www.bentossell.com/blog/post.html?slug=how-i-code" target="_blank" rel="noopener">How I Code without being Technical (Ben Tossell)</a></li>
+          <li><a href="https://youtu.be/oshQg1uSRvg?si=8hHCQLCKq8wZUHpr" target="_blank" rel="noopener">How To Learn To Code In 2026 (Tina Huang)</a></li>
+          <li><a href="https://youtu.be/k0gmTOm1eus?si=F5dHqtZqwW4FLCCF" target="_blank" rel="noopener">A complete beginner's guide to coding with AI (Claire Vo / How I AI)</a></li>
           <li><a href="https://acaiberry.substack.com/p/your-fresh-eyes-are-the-feature" target="_blank" rel="noopener">Your Fresh Eyes Are the Feature</a></li>
           <li><a href="https://acaiberry.substack.com/p/you-dont-need-to-catch-up" target="_blank" rel="noopener">You Don't Need to Catch Up</a></li>
-          <li><a href="https://acaiberry.substack.com/p/building-apps-with-ai-a-journey-in" target="_blank" rel="noopener">Building Apps with AI: A Journey In</a></li>
+          <li><a href="https://acaiberry.substack.com/p/building-apps-with-ai-a-journey-in" target="_blank" rel="noopener">Building Apps with AI: A Journey In Tinkering, Teaching, and Thinking</a></li>
         </ul>
       </details>
     </div>
@@ -485,6 +485,7 @@
         <li>Written for educators and "vibe coders" — people with ideas, no CS degree</li>
         <li>Static HTML with self-hosted JetBrains Mono webfonts — zero external CDN dependencies</li>
         <li>Explains the mental model shift from chat-based to agentic AI</li>
+        <li>Experimenting with UX like presentation mode, global search</li>
       </ul>
     </details>
   </a>
@@ -494,11 +495,11 @@
       <h2>Vibe Code Camp</h2>
       <span class="arrow">↗</span>
     </div>
-    <p class="vibe">Distilled wisdom from 20 speakers on building with AI — a conference turned browsable knowledge base.</p>
+    <p class="vibe">Distilled wisdom from 20 speakers on building with AI — a conference turned browsable knowledge base, from Every Media Inc.</p>
     <details>
       <summary>talking points</summary>
       <ul class="points">
-        <li>Built with Claude Code — conference knowledge extraction into a browsable, searchable format</li>
+        <li>Built with Claude Code — conference knowledge extraction into a browsable, searchable format, but refining by Droid (Factory)</li>
         <li>20 speaker profiles with 6 browsable views (grid, kanban, stacks, float, portraits, list)</li>
         <li>Core concepts: agent-native software, compound engineering, malleable software, MCP</li>
         <li>Includes infographics, slideshow, and DeepWiki link</li>
@@ -529,7 +530,7 @@
       <h2>Hawaii EdTech AI Resources</h2>
       <span class="arrow">↗</span>
     </div>
-    <p class="vibe">A curated resource hub connecting Hawaii's educators to the AI tools that actually matter.</p>
+    <p class="vibe">A curated resource hub connecting Hawaii's educators to the AI tools that actually matter. Not tested yet.</p>
     <details>
       <summary>talking points</summary>
       <ul class="points">
@@ -546,7 +547,7 @@
       <h2>STEAM Engine 25</h2>
       <span class="arrow">↗</span>
     </div>
-    <p class="vibe">An interactive map of the learning ecosystem — pick a path, link the big ideas, and build something real.</p>
+    <p class="vibe">An interactive map of the learning ecosystem — pick a path, link the big ideas, and build something real—based on a semester's class</p>
     <details>
       <summary>talking points</summary>
       <ul class="points">
@@ -554,6 +555,7 @@
         <li>Three entry paths: Quick Start (5 links), Start Here (10-min overview), and Deep Dive</li>
         <li>Core navigation: Learning Journey, Atlas of Ideas, Projects &amp; Efforts</li>
         <li>Designed for self-directed exploration with guided options</li>
+        <li>Voice input after each class, LLM to clean up and organize</li>
       </ul>
     </details>
   </a>
@@ -567,7 +569,7 @@
     <details>
       <summary>talking points</summary>
       <ul class="points">
-        <li>Companion app for a Substack article — bridges reading into interactive exploration</li>
+        <li>Companion app for a Substack article — bridges reading into interactive exploration, https://acaiberry.substack.com/p/google-gemini-creates-informative</li>
         <li>Custom color palette: navy (#1e1b4b), banana (#ffe135), orange (#ff6719)</li>
         <li>Built with Vite + Tailwind, custom scrollbar styling</li>
       </ul>
@@ -576,7 +578,7 @@
 
   <a class="card" data-cat="edtech" href="https://lpcode808.github.io/TechFamilyFunFair/" target="_blank" rel="noopener">
     <div class="card-top">
-      <h2>Tech Family Fun Fair</h2>
+      <h2>Tech and Family Fun Fair</h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A polished event page that brings families and tech together in one cheerful, mobile-friendly package.</p>
@@ -647,7 +649,7 @@
       <h2>ShopTracker</h2>
       <span class="arrow">↗</span>
     </div>
-    <p class="vibe">A no-fuss shopping list that just works — track items, check them off, move on.</p>
+    <p class="vibe">A no-fuss shopping list that just works — track items, check them off, move on, maintaining a budget.</p>
     <details>
       <summary>talking points</summary>
       <ul class="points">
@@ -668,7 +670,7 @@
       <ul class="points">
         <li>HTML5 Canvas visualization of optimal cut layout on a plywood sheet</li>
         <li>Calculates remaining scrap and waste — saves real money on $70 sheets</li>
-        <li>"BYOA" (Build Your Own App) project — vanilla JS, no dependencies</li>
+        <li>"BYOA" (Build Your Own App) project — vanilla JS, no dependencies, https://www.buildyourownapps.com/</li>
       </ul>
     </details>
   </a>
@@ -683,7 +685,7 @@
       <summary>talking points</summary>
       <ul class="points">
         <li>Classic 25-minute Pomodoro with integrated todo list</li>
-        <li>"BYOA" (Build Your Own App) project — simple, focused, no dependencies</li>
+        <li>A solid starter app</li>
       </ul>
     </details>
   </a>
@@ -719,6 +721,7 @@
       <ul class="points">
         <li>Single-page vanilla JS app — one input, one button, opens Google AI Mode</li>
         <li>Settings to change base URL if Google updates the endpoint</li>
+        <li>I use this all the time. Gemini doesn't yet have ?q= param</li>
       </ul>
     </details>
   </a>
@@ -753,6 +756,7 @@
         <li>Search ranks title matches above body matches, shows highlighted snippet previews</li>
         <li>⌘J/⌘K keyboard nav for both results (palette open) and threads (palette closed)</li>
         <li>Functional prototype with realistic sample conversation transcripts</li>
+        <li>I did get acknowledgement from the Codex team</li>
       </ul>
     </details>
   </a>
