@@ -148,6 +148,32 @@
     .theme-btn[data-theme="default"] { background: linear-gradient(135deg, #a78bfa, #34d399); }
     .theme-btn[data-theme="mauka"] { background: linear-gradient(135deg, #2d6a4f, #d4a017); }
     .theme-btn[data-theme="makai"] { background: linear-gradient(135deg, #0077b6, #e85d4a); }
+    /* Subtle keyboard-shortcut hint — shown only on desktop / hover-capable
+       devices, where pressing 1/2/3 actually swaps the theme. */
+    .theme-switcher .kbd-hint {
+      display: none;
+      margin-left: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+      user-select: none;
+    }
+    .theme-switcher .kbd-hint kbd {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      padding: 1px 5px;
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 3px;
+      color: var(--text-dim);
+      background: var(--bg-card);
+      margin: 0 1px;
+    }
+    @media (hover: hover) and (min-width: 700px) {
+      .theme-switcher .kbd-hint { display: inline-flex; align-items: center; gap: 0.25rem; }
+    }
 
     /* ---- APPROACH SECTION ---- */
     .approach {
@@ -738,7 +764,9 @@
       position: relative;
       background: #f6cfd0;            /* pink NCR copy paper */
       color: #3a1417;
-      border: 1px solid #c98a8d;
+      /* Thicker pink border so the carbon-copy edge reads clearly against
+         the light themes; dark theme bumps this up further below. */
+      border: 2px solid #b46266;
       border-radius: 2px;
       padding: 1.25rem 1.4rem 1.4rem;
       font-family: var(--mono);
@@ -790,6 +818,63 @@
       opacity: 0.75;
       box-shadow: inset 0 0 0 1px #a3343a;
       pointer-events: none;
+      transform-origin: center;
+      animation: stamp-pulse 3.4s ease-in-out infinite;
+    }
+    /* Slow heartbeat on the stamp — small enough to feel like the paper is
+       breathing, not a spinning banner. */
+    @keyframes stamp-pulse {
+      0%, 100% { transform: rotate(8deg) scale(1);    opacity: 0.72; }
+      50%      { transform: rotate(8deg) scale(1.06); opacity: 0.95; }
+    }
+    /* One-time "settle" when the work order first scrolls into view —
+       like the sheet just got slapped onto the clipboard. */
+    .work-order.is-noticed {
+      animation: wo-settle 1.1s cubic-bezier(.34, 1.56, .64, 1) 1;
+    }
+    @keyframes wo-settle {
+      0%   { transform: rotate(0.6deg)  translateY(0)    scale(1); }
+      18%  { transform: rotate(2.6deg)  translateY(-3px) scale(1.015); }
+      40%  { transform: rotate(-0.4deg) translateY(1px)  scale(0.998); }
+      65%  { transform: rotate(1.4deg)  translateY(-1px) scale(1.005); }
+      100% { transform: rotate(0.6deg)  translateY(0)    scale(1); }
+    }
+    /* Faint breathing border so the pink card stays gently alive in the
+       periphery without ever competing with the permit's hierarchy. */
+    .work-order {
+      animation: wo-breathe 6s ease-in-out infinite;
+      transition: transform 0.3s cubic-bezier(.34, 1.4, .64, 1),
+                  box-shadow 0.3s ease;
+    }
+    @keyframes wo-breathe {
+      0%, 100% {
+        box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.06),
+          0 8px 24px -12px rgba(0, 0, 0, 0.35),
+          0 0 0 0 rgba(163, 52, 58, 0);
+      }
+      50% {
+        box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.06),
+          0 10px 28px -12px rgba(0, 0, 0, 0.4),
+          0 0 0 3px rgba(163, 52, 58, 0.08);
+      }
+    }
+    /* Hover: lift the sheet off the page, pause the breathing/settle so the
+       motion stays calm under the cursor. */
+    .work-order:hover {
+      transform: rotate(0.6deg) translateY(-6px) scale(1.012);
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.06),
+        0 22px 38px -16px rgba(0, 0, 0, 0.45),
+        0 0 0 3px rgba(163, 52, 58, 0.15);
+      animation-play-state: paused;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .work-order,
+      .work-order.is-noticed,
+      .work-order::after { animation: none; }
+      .work-order:hover { transform: rotate(0.6deg); }
     }
     .work-order-header {
       padding-bottom: 0.5rem;
@@ -943,6 +1028,27 @@
       --bp-ink:  #ffb3a8;        /* coral accents */
     }
 
+    /* Dark theme: the pink work-order needs a much heavier outline to
+       separate it from the near-black page; use a darker pink/red border
+       plus a soft outer halo so it reads as an object on a dark surface. */
+    :root:not([data-theme]) .work-order {
+      border-width: 3px;
+      border-color: #8a3a3e;
+      /* Bright off-white outer ring lifts the card off the dark navy page;
+         the dark-magenta border alone is too low-contrast against #0e0e11. */
+      box-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.06),
+        0 10px 26px -10px rgba(0, 0, 0, 0.6),
+        0 0 0 4px rgba(244, 240, 232, 0.92);
+    }
+    :root:not([data-theme]) .work-order:hover {
+      box-shadow:
+        0 2px 0 rgba(0, 0, 0, 0.06),
+        0 24px 40px -14px rgba(0, 0, 0, 0.7),
+        0 0 0 4px rgba(244, 240, 232, 0.98),
+        0 0 0 8px rgba(163, 52, 58, 0.28);
+    }
+
     @media (max-width: 640px) {
       .hairline { margin-top: 3rem; }
       .appendix { padding-top: 3rem; gap: 2rem; }
@@ -964,6 +1070,7 @@
   <button class="theme-btn active" data-theme="default" title="Default dark (press 1)" aria-label="Default dark theme, keyboard shortcut 1"></button>
   <button class="theme-btn" data-theme="mauka" title="Mauka — mountain greens (press 2)" aria-label="Mauka theme, keyboard shortcut 2"></button>
   <button class="theme-btn" data-theme="makai" title="Makai — ocean blues (press 3)" aria-label="Makai theme, keyboard shortcut 3"></button>
+  <span class="kbd-hint" aria-hidden="true">press <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></span>
 </div>
 
 <section class="approach">
@@ -1574,11 +1681,11 @@
       <dt>Materials</dt>  <dd>your curiosity · an AI partner · a text editor</dd>
       <dt>Deliverable</dt><dd>a one-page plan + your very first concrete step</dd>
     </dl>
-    <div class="actions-label">Pick a foreman</div>
+    <div class="actions-label">Pick a construction crew</div>
     <div class="actions">
-      <a data-build="chatgpt" href="#" target="_blank" rel="noopener">ChatGPT</a>
-      <a data-build="claude"  href="#" target="_blank" rel="noopener">Claude</a>
-      <a data-build="gai"     href="#" target="_blank" rel="noopener">Google AI</a>
+      <a data-build="chatgpt" href="#" target="_blank" rel="noopener" title="ChatGPT crew — Canvas, GPTs, code interpreter">ChatGPT</a>
+      <a data-build="claude"  href="#" target="_blank" rel="noopener" title="Claude crew — Artifacts, Projects, Claude Code">Claude</a>
+      <a data-build="gai"     href="#" target="_blank" rel="noopener" title="Google AI crew — Gemini, AI Studio, Canvas">Google AI</a>
     </div>
     <p class="fineprint">Each link opens a fresh chat with a coaching prompt pre-loaded. You stay in the driver's seat.</p>
   </figure>
@@ -1734,6 +1841,23 @@
       const cfg = builders[a.dataset.build];
       if (cfg) a.href = cfg.url + encodeURIComponent(cfg.q);
     });
+
+    // Work order: trigger a one-time "settle" wobble the first time the
+    // card scrolls into view. Skip if the user prefers reduced motion or
+    // the browser doesn't support IntersectionObserver.
+    const workOrder = document.querySelector('.work-order');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (workOrder && !reduceMotion && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            workOrder.classList.add('is-noticed');
+            io.disconnect();
+          }
+        });
+      }, { threshold: 0.35 });
+      io.observe(workOrder);
+    }
   })();
 
   // Theme switcher
