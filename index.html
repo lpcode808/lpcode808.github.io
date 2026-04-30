@@ -1132,51 +1132,79 @@
     }
     .story-map {
       margin-top: 1rem;
-      display: grid;
-      gap: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
     }
+    /* Each turn is a chat exchange: user bubble (right) → agent bubble (left). */
     .story-turn {
       position: relative;
-      display: grid;
-      grid-template-columns: minmax(8rem, 0.42fr) 1fr;
-      gap: 0.9rem 1rem;
-      padding: 1rem;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      padding: 0.25rem 0 0.25rem 2.4rem;
     }
     .story-turn::before {
       content: attr(data-step);
       position: absolute;
-      top: 0.85rem;
-      right: 0.9rem;
+      top: 0.35rem;
+      left: 0;
+      width: 1.7rem;
+      height: 1.7rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--bg);
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .story-turn > div {
+      max-width: 78%;
+      padding: 0.75rem 0.95rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg);
+    }
+    /* User bubble (right side). */
+    .story-turn > div:first-child {
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+      background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+    }
+    /* Agent / implemented bubble (left side). */
+    .story-turn > div:last-child {
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      border-color: color-mix(in srgb, var(--accent2) 35%, var(--border));
+      background: color-mix(in srgb, var(--accent2) 8%, var(--bg));
     }
     .story-turn h3 {
       margin: 0;
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       letter-spacing: -0.01em;
     }
     .story-turn p {
       margin: 0.35rem 0 0;
       color: var(--text-dim);
-      font-size: 0.86rem;
-      line-height: 1.62;
+      font-size: 0.85rem;
+      line-height: 1.6;
     }
     .story-label {
       display: block;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.4rem;
       font-family: var(--mono);
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--accent);
     }
     .story-label.implemented { color: var(--accent2); }
     .story-note {
-      margin: 1rem 0 0;
+      margin: 1.4rem 0 0;
       padding: 0 0.25rem;
       font-family: var(--mono);
       font-size: 0.68rem;
@@ -1185,8 +1213,8 @@
     @media (max-width: 680px) {
       .build-story-panel { padding: 0.8rem; }
       .story-intro { padding: 1rem 2.75rem 1rem 1rem; }
-      .story-turn { grid-template-columns: 1fr; }
-      .story-turn::before { top: 0.95rem; }
+      .story-turn { padding-left: 2.1rem; }
+      .story-turn > div { max-width: 88%; }
     }
 
     /* Theme overrides for the blueprint paper/ink (cyanotype default,
@@ -1888,6 +1916,32 @@
       <article class="story-turn" data-step="01">
         <div>
           <span class="story-label">User asked</span>
+          <h3>Take an inventory of every live site and turn it into one portfolio page.</h3>
+          <p>The very first session asked an agent to audit a GitHub account, find what was actually deployed on Pages, and build a single index that linked the work — without padding it with names, tags, or marketing language.</p>
+        </div>
+        <div>
+          <span class="story-label implemented">Implemented</span>
+          <h3>A Cascade research-and-scaffold pass behind the page you're reading.</h3>
+          <p>The GitHub API surfaced 38 repos and 24 live Pages sites. Cascade then read each project's local <code>CLAUDE.md</code>, <code>AGENTS.md</code>, and READMEs to write the talking points, scaffolded <code>index.html</code> from scratch — header, "how it's built" disclosure, filter pills, expandable cards, three-theme system — and committed it as <code>init portfolio</code>.</p>
+        </div>
+      </article>
+
+      <article class="story-turn" data-step="02">
+        <div>
+          <span class="story-label">User asked</span>
+          <h3>Be careful about what gets published.</h3>
+          <p>Before pushing anything public, the user wanted a sweep for names, school identifiers, geographic tells, and leaked secrets — and a clear separation between local-only docs and public ones.</p>
+        </div>
+        <div>
+          <span class="story-label implemented">Implemented</span>
+          <h3>A standalone PII audit and a strict gitignore.</h3>
+          <p>Cascade scanned the whole repo with rules tuned for personal names, employer signals, API keys, and indirect identifiers, wrote <code>PII-AUDIT.md</code> with a risk-tiered table, and wired the gitignore so research notes, content drafts, and the audit itself stay local. Public copy uses "User asked," never the user's name.</p>
+        </div>
+      </article>
+
+      <article class="story-turn" data-step="03">
+        <div>
+          <span class="story-label">User asked</span>
           <h3>Make the portfolio feel like "building code."</h3>
           <p>The name carried a double meaning: software code, plus architectural codes, permits, blueprints, and construction paperwork.</p>
         </div>
@@ -1898,7 +1952,7 @@
         </div>
       </article>
 
-      <article class="story-turn" data-step="02">
+      <article class="story-turn" data-step="04">
         <div>
           <span class="story-label">User asked</span>
           <h3>Keep it subtle, mobile-friendly, and theme-aware.</h3>
@@ -1911,7 +1965,7 @@
         </div>
       </article>
 
-      <article class="story-turn" data-step="03">
+      <article class="story-turn" data-step="05">
         <div>
           <span class="story-label">User asked</span>
           <h3>Invite visitors to start building too.</h3>
@@ -1924,7 +1978,7 @@
         </div>
       </article>
 
-      <article class="story-turn" data-step="04">
+      <article class="story-turn" data-step="06">
         <div>
           <span class="story-label">User asked</span>
           <h3>Polish the affordances instead of making things louder.</h3>
@@ -1937,7 +1991,7 @@
         </div>
       </article>
 
-      <article class="story-turn" data-step="05">
+      <article class="story-turn" data-step="07">
         <div>
           <span class="story-label">User asked</span>
           <h3>Make the process inspectable for future humans and agents.</h3>
@@ -1947,32 +2001,6 @@
           <span class="story-label implemented">Implemented</span>
           <h3>Docs, commits, and boards became part of the craft.</h3>
           <p>The build left behind brainstorms, plans, favicon boards, commit history, and this public conversation map so the site shows some of the process that shaped it.</p>
-        </div>
-      </article>
-
-      <article class="story-turn" data-step="06">
-        <div>
-          <span class="story-label">User asked</span>
-          <h3>Take an inventory of every live site and turn it into one portfolio page.</h3>
-          <p>The very first session asked an agent to audit a GitHub account, find what was actually deployed on Pages, and build a single index that linked the work — without padding it with names, tags, or marketing language.</p>
-        </div>
-        <div>
-          <span class="story-label implemented">Implemented</span>
-          <h3>A Cascade research-and-scaffold pass behind the page you're reading.</h3>
-          <p>The GitHub API surfaced 38 repos and 24 live Pages sites. Cascade then read each project's local <code>CLAUDE.md</code>, <code>AGENTS.md</code>, and READMEs to write the talking points, scaffolded <code>index.html</code> from scratch — header, "how it's built" disclosure, filter pills, expandable cards, three-theme system — and committed it as <code>init portfolio</code>.</p>
-        </div>
-      </article>
-
-      <article class="story-turn" data-step="07">
-        <div>
-          <span class="story-label">User asked</span>
-          <h3>Be careful about what gets published.</h3>
-          <p>Before pushing anything public, the user wanted a sweep for names, school identifiers, geographic tells, and leaked secrets — and a clear separation between local-only docs and public ones.</p>
-        </div>
-        <div>
-          <span class="story-label implemented">Implemented</span>
-          <h3>A standalone PII audit and a strict gitignore.</h3>
-          <p>Cascade scanned the whole repo with rules tuned for personal names, employer signals, API keys, and indirect identifiers, wrote <code>PII-AUDIT.md</code> with a risk-tiered table, and wired the gitignore so research notes, content drafts, and the audit itself stay local. Public copy uses "User asked," never the user's name.</p>
         </div>
       </article>
     </div>
