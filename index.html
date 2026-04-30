@@ -19,14 +19,14 @@
       --border: #2a2a35;
       --border-hover: #3d3d4d;
       --text: #e4e4e8;
-      --text-dim: #8b8b9e;
-      --text-muted: #5c5c70;
+      --text-dim: #a6a6b8;
+      --text-muted: #78788c;
       --accent: #a78bfa;
       --accent-dim: #7c5cbf;
       --accent2: #34d399;
       --accent2-dim: #059669;
       --tag-bg: #1e1e2a;
-      --tag-text: #9d9db5;
+      --tag-text: #b0b0c4;
       --tag-active-bg: #a78bfa;
       --tag-active-text: #0e0e11;
       --radius: 10px;
@@ -1259,6 +1259,18 @@
     @media (max-width: 640px) {
       .hairline { margin-top: 3rem; }
       .appendix { padding-top: 3rem; gap: 2rem; }
+      .diorama {
+        overflow: hidden;
+        padding: 1rem 0.85rem;
+      }
+      .diorama svg {
+        width: 165%;
+        max-width: none;
+        transform: translateX(-18%);
+      }
+      .diorama svg .line {
+        stroke-width: 1.8;
+      }
     }
   </style>
 </head>
