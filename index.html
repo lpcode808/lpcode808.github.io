@@ -118,6 +118,14 @@
       transition: color 0.2s;
     }
     header .links a:hover { color: var(--accent2); }
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--accent2);
+      outline-offset: 3px;
+      border-radius: var(--radius-sm);
+    }
 
     /* ---- THEME SWITCHER ---- */
     .theme-switcher {
@@ -312,6 +320,17 @@
       border-color: var(--accent2);
       color: var(--text);
     }
+    .filter-status {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     /* ---- GRID ---- */
     .grid {
@@ -333,11 +352,11 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.25rem;
-      text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
+      cursor: pointer;
       transition: background 0.2s, border-color 0.2s, transform 0.2s;
     }
     .card:hover {
@@ -356,7 +375,16 @@
       font-weight: 600;
       letter-spacing: -0.01em;
       line-height: 1.35;
+    }
+    .card-link {
       color: var(--accent2);
+      text-decoration: none;
+    }
+    .card-link:hover {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
     }
     .card .arrow {
       color: var(--text-muted);
@@ -416,6 +444,9 @@
     }
     .card .explain-link::before {
       content: '\2192  ';
+    }
+    .card:focus-within {
+      border-color: var(--accent2);
     }
 
     /* ---- FOOTER ---- */
@@ -1286,9 +1317,9 @@
 
 <div class="theme-switcher">
   <span>theme</span>
-  <button class="theme-btn active" data-theme="default" title="Default dark (press 1)" aria-label="Default dark theme, keyboard shortcut 1"></button>
-  <button class="theme-btn" data-theme="mauka" title="Mauka — mountain greens (press 2)" aria-label="Mauka theme, keyboard shortcut 2"></button>
-  <button class="theme-btn" data-theme="makai" title="Makai — ocean blues (press 3)" aria-label="Makai theme, keyboard shortcut 3"></button>
+  <button class="theme-btn active" data-theme="default" title="Default dark (press 1)" aria-label="Default dark theme, keyboard shortcut 1" aria-pressed="true"></button>
+  <button class="theme-btn" data-theme="mauka" title="Mauka — mountain greens (press 2)" aria-label="Mauka theme, keyboard shortcut 2" aria-pressed="false"></button>
+  <button class="theme-btn" data-theme="makai" title="Makai — ocean blues (press 3)" aria-label="Makai theme, keyboard shortcut 3" aria-pressed="false"></button>
   <span class="kbd-hint" aria-hidden="true">press <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd></span>
 </div>
 
@@ -1323,21 +1354,22 @@
 </section>
 
 <nav class="filters" aria-label="Filter projects">
-  <button class="active" data-filter="all">All</button>
-  <button data-filter="edtech">EdTech</button>
-  <button data-filter="tools">Tools</button>
-  <button data-filter="viz">Viz & Interactive</button>
-  <button data-filter="ux">UX & Product</button>
-  <button class="expand-toggle" id="expandToggle">expand all</button>
+  <button class="active" data-filter="all" aria-pressed="true">All</button>
+  <button data-filter="edtech" aria-pressed="false">EdTech</button>
+  <button data-filter="tools" aria-pressed="false">Tools</button>
+  <button data-filter="viz" aria-pressed="false">Viz & Interactive</button>
+  <button data-filter="ux" aria-pressed="false">UX & Product</button>
+  <button class="expand-toggle" id="expandToggle" aria-expanded="false">expand all</button>
 </nav>
+<div class="filter-status" id="filterStatus" role="status" aria-live="polite">Showing all 19 projects.</div>
 
 <main class="grid" id="grid">
 
   <!-- ==================== EDTECH ==================== -->
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/ConicSections/" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/ConicSections/">
     <div class="card-top">
-      <h2>Conic Sections</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/ConicSections/" target="_blank" rel="noopener">Conic Sections</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">Explorable math that lets students drag before they derive — light, shape, and reflection made tangible.</p>
@@ -1351,11 +1383,11 @@
         <li>Vanilla JS + HTML Canvas, no build step, GitHub Actions CI for deploy + UX tests</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/Claude-Code-101/" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/Claude-Code-101/">
     <div class="card-top">
-      <h2>Claude Code 101</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/Claude-Code-101/" target="_blank" rel="noopener">Claude Code 101</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">The guide I wish existed when I started — plain-English briefing doc that makes agentic AI approachable for non-developers.</p>
@@ -1369,11 +1401,11 @@
         <li>Experimenting with UX like presentation mode, global search</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/ExploreVibeCodeCamp/" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/ExploreVibeCodeCamp/">
     <div class="card-top">
-      <h2>Vibe Code Camp</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/ExploreVibeCodeCamp/" target="_blank" rel="noopener">Vibe Code Camp</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">Distilled wisdom from 20 speakers on building with AI — a conference turned browsable knowledge base, from Every Media Inc.</p>
@@ -1386,11 +1418,11 @@
         <li>Includes infographics, slideshow, and DeepWiki link</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/Hawaii-Code-AI-Thon-Help/gemini-guide.html" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/Hawaii-Code-AI-Thon-Help/gemini-guide.html">
     <div class="card-top">
-      <h2>Hawaii Code AI-Thon</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/Hawaii-Code-AI-Thon-Help/gemini-guide.html" target="_blank" rel="noopener">Hawaii Code AI-Thon</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A step-by-step launchpad for first-time builders — go from zero to deployed app in one workshop.</p>
@@ -1404,11 +1436,11 @@
         <li>Keyboard shortcuts (T, Cmd+K, Cmd+/, Esc), reading progress bar, vocab hints with tooltips</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/Hawaii-EdTech-AI-Resources/" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/Hawaii-EdTech-AI-Resources/">
     <div class="card-top">
-      <h2>Hawaii EdTech AI Resources</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/Hawaii-EdTech-AI-Resources/" target="_blank" rel="noopener">Hawaii EdTech AI Resources</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A curated resource hub connecting Hawaii's educators to the AI tools that actually matter. Not tested yet.</p>
@@ -1421,11 +1453,11 @@
         <li>Built for the local Hawaii AI/EdTech community — MVP with mock data, designed for real-world resource sharing</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/SteamEngine25/" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/SteamEngine25/">
     <div class="card-top">
-      <h2>STEAM Engine 25</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/SteamEngine25/" target="_blank" rel="noopener">STEAM Engine 25</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">An interactive map of the learning ecosystem — pick a path, link the big ideas, and build something real—based on a semester's class</p>
@@ -1439,11 +1471,11 @@
         <li>Voice input after each class, LLM to clean up and organize</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/nano-banana-explorer/" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/nano-banana-explorer/">
     <div class="card-top">
-      <h2>Nano Banana Architect</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/nano-banana-explorer/" target="_blank" rel="noopener">Nano Banana Architect</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A dark-themed deep-dive companion to a Substack article — reading meets interactive exploration.</p>
@@ -1455,11 +1487,11 @@
         <li>Built with Vite + Tailwind, custom scrollbar styling</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="edtech" href="https://lpcode808.github.io/TechFamilyFunFair/" target="_blank" rel="noopener">
+  <article class="card" data-cat="edtech" data-href="https://lpcode808.github.io/TechFamilyFunFair/">
     <div class="card-top">
-      <h2>Tech and Family Fun Fair</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/TechFamilyFunFair/" target="_blank" rel="noopener">Tech and Family Fun Fair</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A polished event page that brings families and tech together in one cheerful, mobile-friendly package.</p>
@@ -1470,13 +1502,13 @@
         <li>Montserrat + Open Sans typography, SPA routing hack for GitHub Pages</li>
       </ul>
     </details>
-  </a>
+  </article>
 
   <!-- ==================== TOOLS ==================== -->
 
-  <a class="card" data-cat="tools" href="https://lpcode808.github.io/JobSeeker/" target="_blank" rel="noopener">
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/JobSeeker/">
     <div class="card-top">
-      <h2>JobSeeker</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/JobSeeker/" target="_blank" rel="noopener">JobSeeker</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A CLI-inspired dossier for your job search — file trees, interview prompts, and conversational intake in one browser tab.</p>
@@ -1489,11 +1521,11 @@
         <li>Onboarding overlay and sample data to show the pattern immediately</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="tools" href="https://lpcode808.github.io/ScripCalculator/" target="_blank" rel="noopener">
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/ScripCalculator/">
     <div class="card-top">
-      <h2>Scrip Calculator</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/ScripCalculator/" target="_blank" rel="noopener">Scrip Calculator</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">The app you pull out at the school carnival so you know exactly how much scrip to buy.</p>
@@ -1507,11 +1539,11 @@
         <li>"Most users are parents scrambling at carnival" — 90% mobile traffic, iOS Safari primary</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="tools" href="https://lpcode808.github.io/Mortgage/" target="_blank" rel="noopener">
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/Mortgage/">
     <div class="card-top">
-      <h2>Hawaii Mortgage Calculator</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/Mortgage/" target="_blank" rel="noopener">Hawaii Mortgage Calculator</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">Hawaii-specific mortgage math — because housing here hits different and you need to see the real numbers.</p>
@@ -1523,11 +1555,11 @@
         <li>Built for the Hawaii housing market</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="tools" href="https://lpcode808.github.io/ShopTracker/" target="_blank" rel="noopener">
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/ShopTracker/">
     <div class="card-top">
-      <h2>ShopTracker</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/ShopTracker/" target="_blank" rel="noopener">ShopTracker</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A no-fuss shopping list that just works — track items, check them off, move on, maintaining a budget.</p>
@@ -1538,11 +1570,11 @@
         <li>Browser-based, no account needed, built in a single session</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="tools" href="https://lpcode808.github.io/BYOA-plywood/" target="_blank" rel="noopener">
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/BYOA-plywood/">
     <div class="card-top">
-      <h2>Plywood Cutter</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/BYOA-plywood/" target="_blank" rel="noopener">Plywood Cutter</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A woodworker's best friend — visualize your cuts before you waste a $70 sheet of plywood.</p>
@@ -1554,11 +1586,11 @@
         <li>"BYOA" (Build Your Own App) project — vanilla JS, no dependencies, from a 2025 course on AI-assisted coding</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="tools" href="https://lpcode808.github.io/BYOA-pomotimer/" target="_blank" rel="noopener">
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/BYOA-pomotimer/">
     <div class="card-top">
-      <h2>Pomo Timer</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/BYOA-pomotimer/" target="_blank" rel="noopener">Pomo Timer</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A fun Pomodoro timer that keeps you honest — 25 minutes of focus, then you've earned a break.</p>
@@ -1569,13 +1601,13 @@
         <li>A solid starter app</li>
       </ul>
     </details>
-  </a>
+  </article>
 
   <!-- ==================== VIZ & INTERACTIVE ==================== -->
 
-  <a class="card" data-cat="viz" href="https://lpcode808.github.io/Comparison/" target="_blank" rel="noopener">
+  <article class="card" data-cat="viz" data-href="https://lpcode808.github.io/Comparison/">
     <div class="card-top">
-      <h2>AI Tool Comparison</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/Comparison/" target="_blank" rel="noopener">AI Tool Comparison</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">The reference table for the agentic era — filter, sort, and actually understand which AI tool does what.</p>
@@ -1589,11 +1621,11 @@
         <li>Mobile: focus-one-service mode with next/prev; Desktop: full comparison table</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="viz" href="https://lpcode808.github.io/GoogleAIMode/" target="_blank" rel="noopener">
+  <article class="card" data-cat="viz" data-href="https://lpcode808.github.io/GoogleAIMode/">
     <div class="card-top">
-      <h2>G.AI Quick Launch</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/GoogleAIMode/" target="_blank" rel="noopener">G.AI Quick Launch</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">One text box, one tap, straight into Google's AI search — built for speed on mobile.</p>
@@ -1605,11 +1637,11 @@
         <li>I use this all the time. Gemini doesn't yet have ?q= param</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="viz" href="https://lpcode808.github.io/DialUp/" target="_blank" rel="noopener">
+  <article class="card" data-cat="viz" data-href="https://lpcode808.github.io/DialUp/">
     <div class="card-top">
-      <h2>DialUp</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/DialUp/" target="_blank" rel="noopener">DialUp</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">A retro-spirited contact book that lives in your browser — local, private, satisfying.</p>
@@ -1620,13 +1652,13 @@
         <li>Single HTML file, zero dependencies, localStorage persistence, dark mode</li>
       </ul>
     </details>
-  </a>
+  </article>
 
   <!-- ==================== UX & PRODUCT ==================== -->
 
-  <a class="card" data-cat="ux" href="https://lpcode808.github.io/ThreadSwitcherMockup/" target="_blank" rel="noopener">
+  <article class="card" data-cat="ux" data-href="https://lpcode808.github.io/ThreadSwitcherMockup/">
     <div class="card-top">
-      <h2>Thread Quick Open</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/ThreadSwitcherMockup/" target="_blank" rel="noopener">Thread Quick Open</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">What if switching AI threads felt as fast as ⌘K? — a UX proposal for Codex's thread navigation.</p>
@@ -1640,11 +1672,11 @@
         <li>I did get acknowledgement from the Codex team</li>
       </ul>
     </details>
-  </a>
+  </article>
 
-  <a class="card" data-cat="ux" href="https://lpcode808.github.io/Wrapped-Claude-Code/" target="_blank" rel="noopener">
+  <article class="card" data-cat="ux" data-href="https://lpcode808.github.io/Wrapped-Claude-Code/">
     <div class="card-top">
-      <h2>Claude Code Wrapped</h2>
+      <h2><a class="card-link" href="https://lpcode808.github.io/Wrapped-Claude-Code/" target="_blank" rel="noopener">Claude Code Wrapped</a></h2>
       <span class="arrow">↗</span>
     </div>
     <p class="vibe">Spotify Wrapped but for your Claude Code year — key moments, meta achievements, and the vibes of building with AI.</p>
@@ -1657,7 +1689,7 @@
         <li>Read-only, local-only, no tracking — community project tagged #ClaudeCodeWrapped</li>
       </ul>
     </details>
-  </a>
+  </article>
 
 </main>
 
@@ -2025,32 +2057,47 @@
   // Filter buttons (only ones with data-filter)
   const filterBtns = document.querySelectorAll('.filters button[data-filter]');
   const cards = document.querySelectorAll('.card');
+  const filterStatus = document.getElementById('filterStatus');
+  const filterLabels = {
+    all: 'all projects',
+    edtech: 'EdTech projects',
+    tools: 'Tools projects',
+    viz: 'Viz and Interactive projects',
+    ux: 'UX and Product projects'
+  };
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      filterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       const filter = btn.dataset.filter;
+      let visible = 0;
       cards.forEach(card => {
         if (filter === 'all' || card.dataset.cat === filter) {
           card.classList.remove('hidden');
+          visible += 1;
         } else {
           card.classList.add('hidden');
         }
       });
+      if (filterStatus) {
+        filterStatus.textContent = `Showing ${visible} ${filterLabels[filter] || 'projects'}.`;
+      }
     });
   });
 
-  // Prevent card navigation when clicking details
-  document.querySelectorAll('.card details').forEach(d => {
-    d.addEventListener('click', e => e.preventDefault());
-  });
-  document.querySelectorAll('.card summary').forEach(s => {
-    s.addEventListener('click', e => {
-      e.preventDefault();
-      e.stopPropagation();
-      const details = s.parentElement;
-      details.open = !details.open;
+  // Keep the whole card pointer-friendly while leaving links and disclosure
+  // controls as real, separate interactive elements for keyboard users.
+  const interactiveSelector = 'a, button, summary, details';
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest(interactiveSelector)) return;
+      const link = card.querySelector('.card-link');
+      if (link) window.open(link.href, '_blank', 'noopener');
     });
   });
 
@@ -2061,6 +2108,7 @@
     allOpen = !allOpen;
     document.querySelectorAll('.card details').forEach(d => d.open = allOpen);
     expandBtn.textContent = allOpen ? 'collapse all' : 'expand all';
+    expandBtn.setAttribute('aria-expanded', String(allOpen));
   });
 
   // Inject "explain terms" links into each card
@@ -2215,10 +2263,31 @@
 
   // Theme switcher
   const themeBtns = document.querySelectorAll('.theme-btn');
-  const saved = localStorage.getItem('portfolio-theme');
-  if (saved) {
-    document.documentElement.setAttribute('data-theme', saved);
-    themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === saved));
+  const storage = {
+    get(key) {
+      try { return window.localStorage.getItem(key); }
+      catch (e) { return null; }
+    },
+    set(key, value) {
+      try { window.localStorage.setItem(key, value); }
+      catch (e) { /* Private browsing or locked-down storage should not break theme switching. */ }
+    }
+  };
+  const saved = storage.get('portfolio-theme');
+  if (saved && keyMapValue(saved)) {
+    if (saved === 'default') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+    themeBtns.forEach(b => {
+      const isActive = b.dataset.theme === saved;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+  function keyMapValue(theme) {
+    return ['default', 'mauka', 'makai'].includes(theme);
   }
   const applyTheme = (theme) => {
     if (theme === 'default') {
@@ -2226,8 +2295,12 @@
     } else {
       document.documentElement.setAttribute('data-theme', theme);
     }
-    localStorage.setItem('portfolio-theme', theme);
-    themeBtns.forEach(b => b.classList.toggle('active', b.dataset.theme === theme));
+    storage.set('portfolio-theme', theme);
+    themeBtns.forEach(b => {
+      const isActive = b.dataset.theme === theme;
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-pressed', String(isActive));
+    });
   };
   themeBtns.forEach(btn => {
     btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
