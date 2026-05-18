@@ -8,7 +8,8 @@
   <meta name="description" content="A portfolio of tools, explorable explanations, and prototypes built at the intersection of education, AI, and craft.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></noscript>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -44,7 +45,7 @@
       --border-hover: #b8a880;
       --text: #2c2416;
       --text-dim: #5e5039;
-      --text-muted: #8a7a5a;
+      --text-muted: #6b5a42;
       --accent: #2d6a4f;
       --accent-dim: #1b4332;
       --accent2: #d4a017;
@@ -64,7 +65,7 @@
       --border-hover: #8cbfd6;
       --text: #1a2e3a;
       --text-dim: #3d6478;
-      --text-muted: #6a9ab5;
+      --text-muted: #4f7a91;
       --accent: #0077b6;
       --accent-dim: #005f8a;
       --accent2: #e85d4a;
@@ -76,6 +77,22 @@
     }
 
     html { scroll-behavior: smooth; }
+
+    /* Skip-to-content link — only visible on keyboard focus. */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 0.5rem;
+      z-index: 9999;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 0.6rem 1rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      text-decoration: none;
+      transition: top 0.15s ease;
+    }
+    .skip-link:focus { top: 0.5rem; outline: 2px solid var(--text); outline-offset: 2px; }
 
     body {
       font-family: var(--font);
@@ -143,9 +160,9 @@
       margin-right: 0.25rem;
     }
     .theme-btn {
-      width: 38px;
-      height: 32px;
-      margin: -5px 0;
+      width: 44px;
+      height: 44px;
+      margin: -10px 0;
       border-radius: 999px;
       border: 1px solid transparent;
       background: transparent;
@@ -291,7 +308,8 @@
       font-family: var(--font);
       font-size: 0.8rem;
       font-weight: 500;
-      padding: 0.4rem 0.85rem;
+      min-height: 44px;
+      padding: 0.55rem 1rem;
       border-radius: 100px;
       border: 1px solid var(--border);
       background: var(--tag-bg);
@@ -321,15 +339,13 @@
       color: var(--text);
     }
     .filter-status {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
     }
 
     /* ---- GRID ---- */
@@ -524,6 +540,7 @@
       display: block;
       width: 100%;
       height: auto;
+      aspect-ratio: 700 / 260;
       max-height: 260px;
     }
     .diorama svg .line {
@@ -597,6 +614,7 @@
       display: block;
       width: 100%;
       height: auto;
+      aspect-ratio: 800 / 460;
       max-height: 380px;
     }
     .blueprint svg .frame,
@@ -623,6 +641,11 @@
     .blueprint svg .room:focus-visible .hit,
     .blueprint svg .room.is-active .hit { opacity: 0.10; }
     .blueprint svg .room:focus { outline: none; }
+    .blueprint svg .room:focus-visible {
+      outline: 2px solid var(--accent2);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
     .blueprint svg text {
       font-family: var(--mono);
       font-size: 11px;
@@ -1307,6 +1330,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#grid">Skip to projects</a>
+
 <header>
   <h1>building <span>code</span></h1>
   <p>Tools, explorable explanations, and prototypes at the intersection of education, AI, and craft. Everything here is live — tap any card to try it.</p>
@@ -1354,11 +1379,11 @@
 </section>
 
 <nav class="filters" aria-label="Filter projects">
-  <button class="active" data-filter="all" aria-pressed="true">All</button>
-  <button data-filter="edtech" aria-pressed="false">EdTech</button>
-  <button data-filter="tools" aria-pressed="false">Tools</button>
-  <button data-filter="viz" aria-pressed="false">Viz & Interactive</button>
-  <button data-filter="ux" aria-pressed="false">UX & Product</button>
+  <button class="active" data-filter="all" aria-pressed="true" aria-controls="grid filterStatus">All</button>
+  <button data-filter="edtech" aria-pressed="false" aria-controls="grid filterStatus">EdTech</button>
+  <button data-filter="tools" aria-pressed="false" aria-controls="grid filterStatus">Tools</button>
+  <button data-filter="viz" aria-pressed="false" aria-controls="grid filterStatus">Viz & Interactive</button>
+  <button data-filter="ux" aria-pressed="false" aria-controls="grid filterStatus">UX & Product</button>
   <button class="expand-toggle" id="expandToggle" aria-expanded="false">expand all</button>
 </nav>
 <div class="filter-status" id="filterStatus" role="status" aria-live="polite">Showing all 19 projects.</div>
@@ -2239,11 +2264,16 @@
     const openBtn = document.querySelector('[data-story-open]');
     if (!dialog || !openBtn) return;
 
+    let lastFocus = null;
+
     const closeDialog = () => {
       if (dialog.open) dialog.close();
+      else dialog.removeAttribute('open');
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
     };
 
     openBtn.addEventListener('click', () => {
+      lastFocus = document.activeElement;
       if (typeof dialog.showModal === 'function') {
         dialog.showModal();
       } else {
@@ -2253,6 +2283,22 @@
 
     dialog.querySelectorAll('[data-story-close]').forEach(btn => {
       btn.addEventListener('click', closeDialog);
+    });
+
+    // Escape key fallback for non-native dialog implementations; native
+    // <dialog> already fires a 'cancel' event we can hook into to restore focus.
+    dialog.addEventListener('cancel', () => {
+      if (lastFocus && typeof lastFocus.focus === 'function') {
+        // 'cancel' fires before close; defer focus restore until after close.
+        setTimeout(() => lastFocus.focus(), 0);
+      }
+    });
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !dialog.open) {
+        // Polyfill path: dialog has [open] attribute but no native close.
+        e.preventDefault();
+        closeDialog();
+      }
     });
 
     dialog.addEventListener('click', (e) => {
