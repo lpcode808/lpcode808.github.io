@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 
 const cards = [...html.matchAll(/<article class="card" data-cat="([^"]+)" data-href="([^"]+)">([\s\S]*?)<\/article>/g)];
-assert.equal(cards.length, 19, 'renders 19 project cards');
+assert.equal(cards.length, 20, 'renders 20 project cards');
 assert.equal((html.match(/<a class="card"/g) || []).length, 0, 'cards are not anchors containing disclosure controls');
 
 for (const [, category, href, body] of cards) {

@@ -25,7 +25,7 @@ Then open `http://localhost:8787`.
 
 ## Test and validation
 
-The site has no build step. The cheap regression check is a Node smoke test that reads `index.html` and verifies the critical single-page contract: 19 project cards, semantic card links, native disclosure controls, filter/theme accessibility state, guarded theme storage, reduced-motion handling, and the build-story dialog hook.
+The site has no build step. The cheap regression check is a Node smoke test that reads `index.html` and verifies the critical single-page contract: 20 project cards, semantic card links, native disclosure controls, filter/theme accessibility state, guarded theme storage, reduced-motion handling, and the build-story dialog hook.
 
 ```bash
 npm test

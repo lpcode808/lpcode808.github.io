@@ -1361,9 +1361,79 @@
   <button data-filter="ux" aria-pressed="false">UX & Product</button>
   <button class="expand-toggle" id="expandToggle" aria-expanded="false">expand all</button>
 </nav>
-<div class="filter-status" id="filterStatus" role="status" aria-live="polite">Showing all 19 projects.</div>
+<div class="filter-status" id="filterStatus" role="status" aria-live="polite">Showing all 20 projects.</div>
 
 <main class="grid" id="grid">
+
+  <!-- ==================== LEAD CARDS (cross-category, pinned to top) ==================== -->
+
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/BYOA-plywood/">
+    <div class="card-top">
+      <h2><a class="card-link" href="https://lpcode808.github.io/BYOA-plywood/" target="_blank" rel="noopener">Plywood Cutter</a></h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A woodworker's best friend — visualize your cuts before you waste a $70 sheet of plywood.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>HTML5 Canvas visualization of optimal cut layout on a plywood sheet</li>
+        <li>Calculates remaining scrap and waste — saves real money on $70 sheets</li>
+        <li>"BYOA" (Build Your Own App) project — vanilla JS, no dependencies, from a 2025 course on AI-assisted coding</li>
+      </ul>
+    </details>
+  </article>
+
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/ScripCalculator/">
+    <div class="card-top">
+      <h2><a class="card-link" href="https://lpcode808.github.io/ScripCalculator/" target="_blank" rel="noopener">Scrip Calculator</a></h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">The app you pull out at the school carnival so you know exactly how much scrip to buy.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code — pure HTML/CSS/JS, data-driven via menu.json, no build tools</li>
+        <li>2026 theme: "Welcome to the Jungle" — jungle greens, carnival yellow, creme background</li>
+        <li>Hash map indexing for O(1) lookups, event delegation, WCAG 2.1 AA accessible</li>
+        <li>Updated annually every January — scrip value changed from 50¢ to $1 in 2026</li>
+        <li>"Most users are parents scrambling at carnival" — 90% mobile traffic, iOS Safari primary</li>
+      </ul>
+    </details>
+  </article>
+
+  <article class="card" data-cat="viz" data-href="https://lpcode808.github.io/Comparison/">
+    <div class="card-top">
+      <h2><a class="card-link" href="https://lpcode808.github.io/Comparison/" target="_blank" rel="noopener">AI Tool Comparison</a></h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">The reference table for the agentic era — filter, sort, and actually understand which AI tool does what.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Built with Claude Code — vanilla JS, Fuse.js (only external dep), no build step</li>
+        <li>74 Playwright E2E tests, axe-core accessibility audit: 0 critical/serious/moderate violations</li>
+        <li>Based on Ethan Mollick's Feb 2026 guide — Models → Apps → Harnesses framework</li>
+        <li>3 separate color systems all meeting WCAG 4.5:1 contrast, light/dark theme toggle</li>
+        <li>Mobile: focus-one-service mode with next/prev; Desktop: full comparison table</li>
+      </ul>
+    </details>
+  </article>
+
+  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/Rapid-Ideation-Trainer/">
+    <div class="card-top">
+      <h2><a class="card-link" href="https://lpcode808.github.io/Rapid-Ideation-Trainer/" target="_blank" rel="noopener">Rapid Ideation Trainer</a></h2>
+      <span class="arrow">↗</span>
+    </div>
+    <p class="vibe">A four-minute brain workout — race the clock to list as many ideas as you can, one round at a time.</p>
+    <details>
+      <summary>talking points</summary>
+      <ul class="points">
+        <li>Four timed 1-minute rounds that climb Point → Line → Square → Cube, from simple lists up to open-ended "ways to improve social media" prompts</li>
+        <li>Bundled library of ~250 prompts, shuffle for a new one, session progress saved in the browser (localStorage)</li>
+        <li>React + Vite app, built to static files and deployed on GitHub Pages</li>
+      </ul>
+    </details>
+  </article>
 
   <!-- ==================== EDTECH ==================== -->
 
@@ -1523,24 +1593,6 @@
     </details>
   </article>
 
-  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/ScripCalculator/">
-    <div class="card-top">
-      <h2><a class="card-link" href="https://lpcode808.github.io/ScripCalculator/" target="_blank" rel="noopener">Scrip Calculator</a></h2>
-      <span class="arrow">↗</span>
-    </div>
-    <p class="vibe">The app you pull out at the school carnival so you know exactly how much scrip to buy.</p>
-    <details>
-      <summary>talking points</summary>
-      <ul class="points">
-        <li>Built with Claude Code — pure HTML/CSS/JS, data-driven via menu.json, no build tools</li>
-        <li>2026 theme: "Welcome to the Jungle" — jungle greens, carnival yellow, creme background</li>
-        <li>Hash map indexing for O(1) lookups, event delegation, WCAG 2.1 AA accessible</li>
-        <li>Updated annually every January — scrip value changed from 50¢ to $1 in 2026</li>
-        <li>"Most users are parents scrambling at carnival" — 90% mobile traffic, iOS Safari primary</li>
-      </ul>
-    </details>
-  </article>
-
   <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/Mortgage/">
     <div class="card-top">
       <h2><a class="card-link" href="https://lpcode808.github.io/Mortgage/" target="_blank" rel="noopener">Hawaii Mortgage Calculator</a></h2>
@@ -1572,22 +1624,6 @@
     </details>
   </article>
 
-  <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/BYOA-plywood/">
-    <div class="card-top">
-      <h2><a class="card-link" href="https://lpcode808.github.io/BYOA-plywood/" target="_blank" rel="noopener">Plywood Cutter</a></h2>
-      <span class="arrow">↗</span>
-    </div>
-    <p class="vibe">A woodworker's best friend — visualize your cuts before you waste a $70 sheet of plywood.</p>
-    <details>
-      <summary>talking points</summary>
-      <ul class="points">
-        <li>HTML5 Canvas visualization of optimal cut layout on a plywood sheet</li>
-        <li>Calculates remaining scrap and waste — saves real money on $70 sheets</li>
-        <li>"BYOA" (Build Your Own App) project — vanilla JS, no dependencies, from a 2025 course on AI-assisted coding</li>
-      </ul>
-    </details>
-  </article>
-
   <article class="card" data-cat="tools" data-href="https://lpcode808.github.io/BYOA-pomotimer/">
     <div class="card-top">
       <h2><a class="card-link" href="https://lpcode808.github.io/BYOA-pomotimer/" target="_blank" rel="noopener">Pomo Timer</a></h2>
@@ -1604,24 +1640,6 @@
   </article>
 
   <!-- ==================== VIZ & INTERACTIVE ==================== -->
-
-  <article class="card" data-cat="viz" data-href="https://lpcode808.github.io/Comparison/">
-    <div class="card-top">
-      <h2><a class="card-link" href="https://lpcode808.github.io/Comparison/" target="_blank" rel="noopener">AI Tool Comparison</a></h2>
-      <span class="arrow">↗</span>
-    </div>
-    <p class="vibe">The reference table for the agentic era — filter, sort, and actually understand which AI tool does what.</p>
-    <details>
-      <summary>talking points</summary>
-      <ul class="points">
-        <li>Built with Claude Code — vanilla JS, Fuse.js (only external dep), no build step</li>
-        <li>74 Playwright E2E tests, axe-core accessibility audit: 0 critical/serious/moderate violations</li>
-        <li>Based on Ethan Mollick's Feb 2026 guide — Models → Apps → Harnesses framework</li>
-        <li>3 separate color systems all meeting WCAG 4.5:1 contrast, light/dark theme toggle</li>
-        <li>Mobile: focus-one-service mode with next/prev; Desktop: full comparison table</li>
-      </ul>
-    </details>
-  </article>
 
   <article class="card" data-cat="viz" data-href="https://lpcode808.github.io/GoogleAIMode/">
     <div class="card-top">
@@ -1694,7 +1712,7 @@
 </main>
 
 <footer>
-  <span>19 projects · all live on GitHub Pages · <a href="https://github.com/lpcode808">lpcode808</a></span>
+  <span>20 projects · all live on GitHub Pages · <a href="https://github.com/lpcode808">lpcode808</a></span>
   <span>created in the <a href="https://www.lapietra.edu/academics/techzone" target="_blank" rel="noopener">TechZone at the Hawaii School for Girls at La Pietra</a></span>
 </footer>
 
@@ -1901,7 +1919,7 @@
       <dt>Lot</dt>              <dd>github.io / lpcode808.github.io</dd>
       <dt>Structure</dt>        <dd>Portfolio · single-page, vanilla</dd>
       <dt>Foundation</dt>       <dd>HTML · CSS · JavaScript (no build)</dd>
-      <dt>Stories</dt>          <dd><span data-permit="stories">19</span> projects · all live on GitHub Pages</dd>
+      <dt>Stories</dt>          <dd><span data-permit="stories">20</span> projects · all live on GitHub Pages</dd>
       <dt>Code compliance</dt>  <dd>IBC §808 · Vanilla-First · No-Build · Local-First · WCAG 2.1 AA</dd>
       <dt>Occupancy</dt>        <dd>Educators · curious lurkers · hiring managers</dd>
     </dl>
